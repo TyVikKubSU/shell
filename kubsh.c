@@ -1,14 +1,28 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 
-int main() {
-  printf("$ ");
-  
-  char input[100];
-  fgets(input, 100, stdin);
-  input[strlen(input) - 1] = '\0';
+#include <readline/readline.h>
 
-  printf("%s: command not found\n", input);
+void debug(char *line) {
+  printf("%s\n", line);
+}
+
+int main() {
+  char *input;
+  
+  while (true) {
+    input = readline("$ ");
+
+    if (!strcmp(input, "\\q")) {
+      break;
+    } else if (strncmp(input, "debug ", 5) == 0) {
+      debug(input);
+    } else {
+      printf("%s: command not found\n", input);
+    }
+  }
   
   return 0;
 }
