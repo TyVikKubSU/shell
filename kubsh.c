@@ -2,23 +2,37 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <signal.h>
 
 #include <readline/readline.h>
 #include <readline/history.h>
 
 #define HISTORY_FILE ".kubsh_history"
 
+sig_atomic_t signal_received = 0;
+
 void debug(char *line) {
   printf("%s\n", line);
 }
 
+void sig_handler(int signum) {
+  signal_received = signum;
+  printf("Configuration reloaded");
+}
+
 int main() {
+  signal(SIGHUP, sig_handler);
   read_history(HISTORY_FILE);
 
   char *input;
   
   while (true) {
     input = readline("$ ");
+
+    if (signal_received) {
+      signal_received = 0;
+      continue;
+    }
 
     if (input == NULL) {
       break;
