@@ -16,6 +16,49 @@
 
 static int vfs_pid = -1;
 
+
+int get_users_list() {
+}
+
+
+void free_users_list() {
+}
+
+
+static int users_readdir(
+    const char *path, 
+    void *buf, 
+    fuse_fill_dir_t filler,
+    off_t offset,
+    struct fuse_file_info *fi,
+    enum fuse_readdir_flags flags
+) {
+}
+
+
+static int users_open(const char *path, struct fuse_file_info *fi) {
+}
+
+
+static int users_read(
+    const char *path, 
+    char *buf, 
+    size_t size,
+    off_t offset,
+    struct fuse_file_info *fi
+) {
+}
+
+
+static int users_getattr(const char *path, struct stat *stbuf,
+                         struct fuse_file_info *fi) {
+}
+
+
+static int users_mkdir(const char *path, mode_t mode) {
+}
+
+
 static struct fuse_operations users_oper = {
     .getattr = users_getattr,
     .open = users_open,
@@ -23,6 +66,7 @@ static struct fuse_operations users_oper = {
     .readdir = users_readdir,
     .mkdir = users_mkdir,
 };
+
 
 int start_users_vfs(const char *mount_point) {
     int pid = fork();    
